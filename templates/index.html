@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumFlix – Movie Recommendation System</title>
+    <meta name="description" content="Personalized Movie Recommendation Engine driven by user preference matching and feature scoring.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">⚛</div>
+                <div class="brand-text">
+                    <h2>QuantumFlix</h2>
+                    <span>RECOMMENDATION SYSTEM</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-tab="tab-discover">
+                    <span class="nav-icon">◉</span> Discover
+                </button>
+                <button class="nav-btn" data-tab="tab-recommendations">
+                    <span class="nav-icon">✦</span> Recommendations
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Movie Recommendation Engine</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TAB 1: DISCOVER (LANDING PAGE) -->
+            <section id="tab-discover" class="tab-pane active">
+                <header class="page-header">
+                    <h1>Find Your Next Favorite Movie</h1>
+                    <p class="subtitle">Tell us what you're in the mood for and we'll find movies that match.</p>
+                </header>
+
+                <div class="hero-banner glass-card">
+                    <div class="hero-content">
+                        <h2>Personalized Movie Discovery</h2>
+                        <p>Explore top-rated movies across genres, languages, release eras, and moods. Custom-tailored to your exact viewing preferences.</p>
+                        <button class="btn btn-primary" id="btn-start-exploring">✨ Start Exploring</button>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h3>Featured Movies</h3>
+                    <p>Highlights from our multi-lingual dataset</p>
+                </div>
+                <div class="movie-grid" id="discover-featured-grid">
+                    <!-- Dynamic sample cards rendered via script.js -->
+                </div>
+            </section>
+
+            <!-- TAB 2: RECOMMENDATIONS STUDIO -->
+            <section id="tab-recommendations" class="tab-pane">
+                <header class="page-header">
+                    <h1>Recommendation Studio</h1>
+                    <p class="subtitle">Tell us what you want to watch.</p>
+                </header>
+
+                <!-- PREFERENCE FORM -->
+                <form id="recommendation-form" class="preference-form glass-card" onsubmit="return false;">
+                    <!-- SECTION 1: GENRES -->
+                    <div class="form-section">
+                        <label class="form-label">1. Choose Your Genres <span class="required">*</span></label>
+                        <div class="chips-container" id="genre-chips">
+                            <!-- Selectable genre chips populated via script.js -->
+                        </div>
+                    </div>
+
+                    <div class="form-row grid-2">
+                        <!-- SECTION 2: LANGUAGE -->
+                        <div class="form-section">
+                            <label for="pref-language" class="form-label">2. Preferred Language</label>
+                            <select id="pref-language" class="form-control">
+                                <option value="Any Language" selected>Any Language</option>
+                                <option value="English">English</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Tamil">Tamil</option>
+                                <option value="Malayalam">Malayalam</option>
+                                <option value="Telugu">Telugu</option>
+                                <option value="Kannada">Kannada</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="French">French</option>
+                                <option value="Spanish">Spanish</option>
+                            </select>
+                        </div>
+
+                        <!-- SECTION 3: RELEASE YEAR -->
+                        <div class="form-section">
+                            <div class="year-label-row">
+                                <label class="form-label">3. Release Year</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="pref-any-year"> Any Year
+                                </label>
+                            </div>
+                            <div class="year-range-inputs" id="year-range-container">
+                                <input type="number" id="pref-year-from" class="form-control" min="1950" max="2026" value="2010" placeholder="From">
+                                <span class="range-separator">to</span>
+                                <input type="number" id="pref-year-to" class="form-control" min="1950" max="2026" value="2025" placeholder="To">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row grid-2">
+                        <!-- SECTION 4: MINIMUM RATING -->
+                        <div class="form-section">
+                            <label for="pref-rating" class="form-label">4. Minimum Rating</label>
+                            <select id="pref-rating" class="form-control">
+                                <option value="0" selected>Any Rating</option>
+                                <option value="6">⭐ 6+</option>
+                                <option value="7">⭐ 7+</option>
+                                <option value="8">⭐ 8+</option>
+                                <option value="9">⭐ 9+</option>
+                            </select>
+                        </div>
+
+                        <!-- SECTION 7: NUMBER OF RECOMMENDATIONS -->
+                        <div class="form-section">
+                            <label for="pref-rec-count" class="form-label">5. Number of Recommendations</label>
+                            <select id="pref-rec-count" class="form-control">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: MOOD -->
+                    <div class="form-section">
+                        <label class="form-label">6. Select Current Mood (Optional)</label>
+                        <div class="chips-container" id="mood-chips">
+                            <!-- Selectable mood chips populated via script.js -->
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6: FAVORITE MOVIE (OPTIONAL) -->
+                    <div class="form-section">
+                        <label for="pref-favorite-movie" class="form-label">7. Favorite Movie (Optional)</label>
+                        <select id="pref-favorite-movie" class="form-control">
+                            <option value="" selected>Search for a movie you already love...</option>
+                            <!-- Movie options populated dynamically -->
+                        </select>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-primary" id="btn-recommend">✨ Recommend Movies</button>
+                        <button type="button" class="btn btn-secondary" id="btn-reset">Reset</button>
+                    </div>
+
+                    <div id="form-error-msg" class="error-msg hidden"></div>
+                </form>
+
+                <!-- USER PREFERENCES SUMMARY -->
+                <div id="preference-summary-box" class="glass-card summary-box hidden">
+                    <h3>YOUR PREFERENCES</h3>
+                    <div id="summary-badges" class="summary-badges"></div>
+                </div>
+
+                <!-- RESULTS SECTION -->
+                <div id="results-container" class="results-container hidden">
+                    <div class="section-title">
+                        <h2>Your Recommendations</h2>
+                        <p>Matches calculated deterministically based on your preference parameters</p>
+                    </div>
+
+                    <!-- TOP MATCH FEATURED HERO CARD -->
+                    <div id="top-match-hero" class="top-match-hero"></div>
+
+                    <!-- RANKED RECOMMENDATIONS GRID -->
+                    <div id="recommendations-grid" class="movie-grid"></div>
+                </div>
+
+                <!-- EMPTY RESULTS FALLBACK -->
+                <div id="empty-results-box" class="glass-card empty-box hidden">
+                    <h3>No exact matches found.</h3>
+                    <p>No movies fit your strict filtering criteria. Try broadening your language, year, or rating settings.</p>
+                    <button class="btn btn-primary" id="btn-relax-filters">Relax Filters</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PROCESSING ANIMATION MODAL -->
+    <div id="processing-modal" class="modal-overlay hidden">
+        <div class="modal-card glass-card">
+            <div class="spinner"></div>
+            <h3 id="processing-title">Finding Your Movies</h3>
+            <div class="progress-steps" id="progress-steps">
+                <div class="step-item" id="pstep-1">Analyzing your preferences...</div>
+                <div class="step-item" id="pstep-2">Finding matching movies...</div>
+                <div class="step-item" id="pstep-3">Ranking the results...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
