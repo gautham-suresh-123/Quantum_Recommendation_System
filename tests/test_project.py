@@ -15,7 +15,7 @@ import pytest
 import numpy as np
 import pandas as pd
 
-from preprocessing import (
+from src.preprocessing import (
     download_and_load_data,
     get_dataset_statistics,
     encode_genres,
@@ -25,10 +25,10 @@ from preprocessing import (
     fit_preprocessing_pipeline,
     transform_preprocessing_pipeline
 )
-from quantum_model import VariationalQuantumCircuit, VQCOptimizer, get_circuit_metrics
-from recommender import process_quantum_recommendations, load_model_artifact
-from experiments.baselines import PopularityBaseline, ContentBasedBaseline, MatrixFactorizationBaseline
-from experiments.evaluate import (
+from src.quantum_model import VariationalQuantumCircuit, VQCOptimizer, get_circuit_metrics
+from src.recommender import process_quantum_recommendations, load_model_artifact
+from src.baselines import PopularityBaseline, ContentBasedBaseline, MatrixFactorizationBaseline
+from src.evaluation import (
     calculate_precision_at_k,
     calculate_recall_at_k,
     calculate_ndcg_at_k,

@@ -40,7 +40,7 @@ from config import (
     HYBRID_ALPHA,
     EVAL_TOP_K_LIST
 )
-from preprocessing import (
+from src.preprocessing import (
     download_and_load_data,
     get_dataset_statistics,
     encode_genres,
@@ -50,9 +50,9 @@ from preprocessing import (
     fit_preprocessing_pipeline,
     transform_preprocessing_pipeline
 )
-from quantum_model import VariationalQuantumCircuit, VQCOptimizer, get_circuit_metrics
-from experiments.baselines import PopularityBaseline, ContentBasedBaseline, MatrixFactorizationBaseline
-from experiments.evaluate import evaluate_model_ranking
+from src.quantum_model import VariationalQuantumCircuit, VQCOptimizer, get_circuit_metrics
+from src.baselines import PopularityBaseline, ContentBasedBaseline, MatrixFactorizationBaseline
+from src.evaluation import evaluate_model_ranking
 from experiments.ablation import run_ablation_study
 from experiments.noise_experiment import run_shot_and_noise_experiments
 

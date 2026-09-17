@@ -17,14 +17,14 @@ import numpy as np
 import pandas as pd
 from typing import Dict, Any, List, Optional
 
-from quantum_model import VariationalQuantumCircuit
-from preprocessing import (
+from src.quantum_model import VariationalQuantumCircuit
+from src.preprocessing import (
     build_user_profile_historical,
     build_interaction_features,
     fit_preprocessing_pipeline,
     transform_preprocessing_pipeline
 )
-from experiments.evaluate import evaluate_model_ranking
+from src.evaluation import evaluate_model_ranking
 
 
 def build_depolarizing_noise_model(p1: float = 0.01, p2: float = 0.02, p_readout: float = 0.02):

@@ -14,7 +14,7 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.metrics.pairwise import cosine_similarity
 
 from config import ALL_GENRES
-from preprocessing import build_user_profile_historical
+from src.preprocessing import build_user_profile_historical
 
 
 class PopularityBaseline:
@@ -34,7 +34,6 @@ class PopularityBaseline:
         max_count = grouped["count"].max() if len(grouped) > 0 else 1.0
         
         for mid, row in grouped.iterrows():
-            # Normalized popularity score combining frequency and mean rating
             freq_score = row["count"] / max_count
             rating_score = (row["mean_rating"] - 1.0) / 4.0
             self.movie_scores[mid] = float(0.5 * freq_score + 0.5 * rating_score)
@@ -99,17 +98,14 @@ class MatrixFactorizationBaseline:
         self.user_idx_map = {uid: i for i, uid in enumerate(self.user_ids)}
         self.movie_idx_map = {mid: j for j, mid in enumerate(self.movie_ids)}
         
-        # Build user-item interaction matrix
         R = np.zeros((len(self.user_ids), len(self.movie_ids)), dtype=float)
         for _, row in train_ratings_df.iterrows():
             u_i = self.user_idx_map[row["userId"]]
             m_j = self.movie_idx_map[row["movieId"]]
-            # Map rating to [0, 1] scale
             R[u_i, m_j] = (row["rating"] - 1.0) / 4.0
 
         self.global_mean = float(np.mean(R[R > 0])) if np.sum(R > 0) > 0 else 0.5
 
-        # Fit SVD
         n_comp = min(self.n_components, min(R.shape) - 1)
         if n_comp >= 1:
             self.user_factors = self.svd.fit_transform(R)

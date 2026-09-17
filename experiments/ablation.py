@@ -19,14 +19,14 @@ import pandas as pd
 from typing import Dict, Any, List
 
 from config import COBYLA_MAX_ITER
-from preprocessing import (
+from src.preprocessing import (
     build_user_profile_historical,
     build_interaction_features,
     fit_preprocessing_pipeline,
     transform_preprocessing_pipeline
 )
-from quantum_model import VariationalQuantumCircuit, VQCOptimizer
-from experiments.evaluate import evaluate_model_ranking
+from src.quantum_model import VariationalQuantumCircuit, VQCOptimizer
+from src.evaluation import evaluate_model_ranking
 
 
 def run_ablation_study(
