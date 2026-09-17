@@ -1,0 +1,42 @@
+{
+  "dataset": {
+    "dataset_name": "MovieLens 100K",
+    "num_users": 943,
+    "num_movies": 1682,
+    "num_ratings": 100000,
+    "rating_scale": "1.0 - 5.0",
+    "mean_rating": 3.53,
+    "timestamp_min": 874724710,
+    "timestamp_max": 893286638,
+    "genre_counts": {
+      "Action": 2,
+      "Adventure": 251,
+      "Animation": 135,
+      "Children's": 42,
+      "Comedy": 122,
+      "Crime": 505,
+      "Documentary": 109,
+      "Drama": 50,
+      "Fantasy": 725,
+      "Film-Noir": 22,
+      "Horror": 24,
+      "Musical": 92,
+      "Mystery": 56,
+      "Romance": 61,
+      "Sci-Fi": 247,
+      "Thriller": 101,
+      "War": 251,
+      "Western": 71,
+      "Unknown": 27
+    }
+  },
+  "random_seed": 42,
+  "train_samples": 70000,
+  "val_samples": 15000,
+  "test_samples": 15000,
+  "n_qubits": 4,
+  "vqc_layers": 2,
+  "hybrid_alpha": 0.5,
+  "cobyla_max_iter": 50,
+  "execution_timestamp": "2026-09-17 22:26:12"
+}

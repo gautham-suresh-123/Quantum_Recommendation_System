@@ -1,0 +1,5 @@
+### Table IV: Variational Quantum Circuit Complexity Metrics
+
+|   n_qubits |   n_layers | entanglement   |   num_params |   circuit_depth |   total_gates |   cnot_gates |   single_qubit_gates |
+|-----------:|-----------:|:---------------|-------------:|----------------:|--------------:|-------------:|---------------------:|
+|          4 |          2 | True           |           24 |              15 |            36 |            8 |                   28 |

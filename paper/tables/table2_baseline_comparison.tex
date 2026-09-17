@@ -1,0 +1,15 @@
+\begin{table}
+\caption{Recommendation Metric Comparison across Models}
+\label{tab:metrics}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+model & precision@5 & recall@5 & ndcg@5 & hit_rate@5 & precision@10 & recall@10 & ndcg@10 & hit_rate@10 & rmse & mae \\
+\midrule
+Popularity Baseline & 0.566000 & 0.104900 & 0.578600 & 0.790000 & 0.509000 & 0.188000 & 0.547300 & 0.850000 & 1.352300 & 1.115700 \\
+Content-Based Baseline & 0.352000 & 0.065100 & 0.355000 & 0.660000 & 0.312000 & 0.127700 & 0.341200 & 0.790000 & 1.671700 & 1.429500 \\
+Matrix Factorization (SVD) & 0.230000 & 0.073100 & 0.342900 & 0.810000 & 0.158000 & 0.076200 & 0.268600 & 0.820000 & 1.362800 & 1.085100 \\
+VQC Model (Quantum Only) & 0.312000 & 0.034300 & 0.323400 & 0.550000 & 0.295000 & 0.068100 & 0.307700 & 0.630000 & 1.410900 & 1.187500 \\
+Hybrid VQC Model (Proposed) & 0.330000 & 0.057200 & 0.355500 & 0.610000 & 0.322000 & 0.132500 & 0.357300 & 0.770000 & 1.526200 & 1.302900 \\
+\bottomrule
+\end{tabular}
+\end{table}
