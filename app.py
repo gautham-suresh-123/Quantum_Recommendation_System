@@ -12,7 +12,7 @@ import logging
 import pandas as pd
 from pathlib import Path
 from flask import Flask, render_template, send_from_directory, request, jsonify
-from recommender import process_quantum_recommendations
+from src.recommender import process_quantum_recommendations
 from config import RESULTS_DIR, MODEL_FILE
 
 logging.basicConfig(level=logging.INFO)

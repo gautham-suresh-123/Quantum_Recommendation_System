@@ -111,19 +111,17 @@ def process_quantum_recommendations(
     user_vec = encode_genre_vector(selected_genres)
 
     artifact = load_model_artifact()
-    if artifact:
-        theta_params = artifact["optimal_theta"]
-        scaler = artifact["scaler"]
-        pca_model = artifact["pca_model"]
-        angle_scaler = artifact["angle_scaler"]
-        vqc = VariationalQuantumCircuit(n_qubits=artifact["n_qubits"], n_layers=artifact["n_layers"])
-    else:
-        vqc = VariationalQuantumCircuit(n_qubits=N_QUBITS, n_layers=VQC_LAYERS)
-        np.random.seed(42)
-        theta_params = np.random.uniform(0, 2 * np.pi, vqc.num_params)
-        from src.preprocessing import fit_preprocessing_pipeline
-        dummy_raw = np.random.rand(10, 76)
-        _, pca_model, scaler, angle_scaler = fit_preprocessing_pipeline(dummy_raw, n_components=N_QUBITS)
+    if not artifact:
+        return {
+            "status": "error",
+            "message": "Required trained model artifact (models/vqc_recommender.pkl) not found. Please run 'python train.py' first."
+        }
+
+    theta_params = artifact["optimal_theta"]
+    scaler = artifact["scaler"]
+    pca_model = artifact["pca_model"]
+    angle_scaler = artifact["angle_scaler"]
+    vqc = VariationalQuantumCircuit(n_qubits=artifact["n_qubits"], n_layers=artifact["n_layers"])
 
     scored_movies = []
     for m in candidates:

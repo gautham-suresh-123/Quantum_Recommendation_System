@@ -13,7 +13,7 @@ import logging
 import requests
 import numpy as np
 import pandas as pd
-from typing import Tuple, Dict, Any, List
+from typing import Tuple, Dict, Any, List, Optional
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
 
@@ -150,12 +150,23 @@ def temporal_train_test_split(
 def build_user_profile_historical(
     user_id: int,
     ratings_history_df: pd.DataFrame,
-    genre_features_df: pd.DataFrame
+    genre_features_df: pd.DataFrame,
+    before_timestamp: Optional[int] = None,
+    exclude_movie_id: Optional[int] = None
 ) -> np.ndarray:
     """
     Calculates leakage-free user genre preference vector P_u in [0, 1]^19 using ONLY historical ratings.
+    If before_timestamp is provided, filters ratings strictly occurring before that timestamp.
+    If exclude_movie_id is provided, excludes the target movie interaction to prevent target leakage.
     """
     u_ratings = ratings_history_df[ratings_history_df["userId"] == user_id]
+    
+    if before_timestamp is not None:
+        u_ratings = u_ratings[u_ratings["timestamp"] < before_timestamp]
+        
+    if exclude_movie_id is not None:
+        u_ratings = u_ratings[u_ratings["movieId"] != exclude_movie_id]
+        
     genre_cols = [g for g in ALL_GENRES if g in genre_features_df.columns]
     
     if len(u_ratings) == 0:

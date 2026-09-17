@@ -94,9 +94,9 @@ def run_full_experiment_pipeline() -> Dict[str, Any]:
     sample_train = train_df.sample(n=min(400, len(train_df)), random_state=RANDOM_SEED)
     X_train_raw, y_train_list = [], []
     for _, row in sample_train.iterrows():
-        uid, mid, rating = int(row["userId"]), int(row["movieId"]), float(row["rating"])
+        uid, mid, rating, ts = int(row["userId"]), int(row["movieId"]), float(row["rating"]), int(row["timestamp"])
         if mid in genre_features_df.index:
-            u_prof = train_user_profiles[uid]
+            u_prof = build_user_profile_historical(uid, train_df, genre_features_df, before_timestamp=ts, exclude_movie_id=mid)
             m_prof = genre_features_df.loc[mid].values.astype(float)
             inter_feat = build_interaction_features(u_prof, m_prof)
             X_train_raw.append(inter_feat)
