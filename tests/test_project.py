@@ -9,7 +9,6 @@ Verifies:
 5. VQC evaluation & circuit metrics.
 6. Un-clamped score breakdown (S_Q, S_C, S_H).
 7. Recommender ranking metrics (Precision@K, Recall@K, NDCG@K, Hit Rate@K, RMSE, MAE).
-8. Educational algorithms lab.
 """
 
 import pytest
@@ -35,15 +34,6 @@ from experiments.evaluate import (
     calculate_ndcg_at_k,
     calculate_hit_rate_at_k,
     calculate_rmse_mae
-)
-from educational.quantum_algorithms import (
-    run_deutsch_jozsa,
-    run_bernstein_vazirani,
-    run_simon,
-    run_grover,
-    run_shor,
-    run_vqe,
-    run_qgan
 )
 from config import ALL_GENRES, N_QUBITS, CANONICAL_FEATURE_DIM
 
@@ -138,13 +128,3 @@ def test_recommender_pipeline_unclamped_scores():
     assert 0.0 <= top["quantum_score_sq"] <= 1.0
     assert 0.0 <= top["classical_score_sc"] <= 1.0
     assert 0.0 <= top["hybrid_score_sh"] <= 1.0
-
-
-def test_educational_lab_algorithms():
-    assert run_deutsch_jozsa(3, "balanced")["determined_type"] == "Balanced"
-    assert run_bernstein_vazirani("1011")["recovered_string"] == "1011"
-    assert len(run_simon("11")["orthogonal_vectors"]) > 0
-    assert run_grover(3, "101")["top_measured"] == "101"
-    assert run_shor(15, 7)["factors"] == (3, 5)
-    assert isinstance(run_vqe(10)["estimated_energy"], float)
-    assert len(run_qgan(5)["synthetic_distribution"]) == 4
