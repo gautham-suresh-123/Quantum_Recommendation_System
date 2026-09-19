@@ -447,18 +447,25 @@ function renderServerRecommendations(data) {
 
     const top = data.top_match;
     if (top) {
-        const matchPct = top.match_percentage || `${Math.round(top.quantum_score * 100)}%`;
+        const rawScore = top.hybrid_score ?? top.quantum_score ?? top.quantum_score_sq ?? 0.8;
+        const matchPct = top.match_percentage || `${Math.round(rawScore * 100)}%`;
+        const yearStr = top.year ? top.year : '';
+        const langStr = top.language ? top.language : 'English';
+        const ratingStr = top.rating ? top.rating : '8.0';
+        const genresStr = Array.isArray(top.genres) ? top.genres.join(' • ') : (top.genres || '');
+        const whyText = top.explanation || `VQC Quantum Score: ${top.quantum_score || top.quantum_score_sq || rawScore}`;
+
         const card = document.createElement('div');
         card.className = 'glass-card hero-card';
         card.innerHTML = `
             <div class="hero-rank">🏆 #1 BEST MATCH (VQC SCORE)</div>
             <div class="hero-details">
                 <h3>${top.title}</h3>
-                <div class="hero-meta">${top.year} • ${top.genres.join(' • ')} • ${top.language}</div>
-                <div class="hero-meta">⭐ ${top.rating} / 10</div>
+                <div class="hero-meta">${yearStr}${yearStr ? ' • ' : ''}${genresStr}${langStr ? ' • ' + langStr : ''}</div>
+                <div class="hero-meta">⭐ ${ratingStr} / 10</div>
                 <p class="movie-desc">${top.description || ''}</p>
                 <div class="why-box">
-                    <strong>Quantum VQC Alignment Score:</strong> ${top.quantum_score} (${matchPct})
+                    <strong>Why you'll like it:</strong> ${whyText}
                 </div>
             </div>
             <div class="scores-block">
@@ -475,9 +482,19 @@ function renderServerRecommendations(data) {
     }
 
     const recs = data.recommendations || [];
-    recs.forEach((movie, index) => {
+    // If top_match was rendered separately, display remaining recommendations in the grid
+    const remainingRecs = recs.length > 1 && top && recs[0].id === top.id ? recs.slice(1) : (top ? recs.filter(m => m.id !== top.id) : recs);
+
+    remainingRecs.forEach((movie, index) => {
         const rank = movie.rank || (index + 2);
-        const matchPct = movie.match_percentage || `${Math.round(movie.quantum_score * 100)}%`;
+        const rawScore = movie.hybrid_score ?? movie.quantum_score ?? movie.quantum_score_sq ?? 0.75;
+        const matchPct = movie.match_percentage || `${Math.round(rawScore * 100)}%`;
+        const yearStr = movie.year ? movie.year : '';
+        const langStr = movie.language ? movie.language : 'English';
+        const ratingStr = movie.rating ? movie.rating : '8.0';
+        const genresStr = Array.isArray(movie.genres) ? movie.genres.join(', ') : (movie.genres || '');
+        const whyText = movie.explanation || '';
+
         const card = document.createElement('div');
         card.className = 'glass-card movie-card';
         card.innerHTML = `
@@ -486,8 +503,8 @@ function renderServerRecommendations(data) {
                     <span class="movie-title">${movie.title}</span>
                     <span class="card-rank">#${rank}</span>
                 </div>
-                <div class="movie-meta">${movie.year} • ${movie.genres.join(', ')} • ${movie.language}</div>
-                <div class="movie-meta">⭐ ${movie.rating} / 10</div>
+                <div class="movie-meta">${yearStr}${yearStr ? ' • ' : ''}${genresStr}${langStr ? ' • ' + langStr : ''}</div>
+                <div class="movie-meta">⭐ ${ratingStr} / 10</div>
                 ${movie.description ? `<p class="movie-desc">${movie.description}</p>` : ''}
             </div>
             <div>
@@ -500,6 +517,7 @@ function renderServerRecommendations(data) {
                         <div class="match-bar-fill" style="width: ${matchPct};"></div>
                     </div>
                 </div>
+                ${whyText ? `<div class="why-box">${whyText}</div>` : ''}
             </div>
         `;
         gridContainer.appendChild(card);

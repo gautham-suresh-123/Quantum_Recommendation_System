@@ -243,4 +243,5 @@ def transform_preprocessing_pipeline(
     X_scaled = scaler.transform(X_raw)
     X_pca = pca_model.transform(X_scaled)
     X_quantum = angle_scaler.transform(X_pca)
-    return X_quantum
+    return np.clip(X_quantum, 0.0, np.pi)
+

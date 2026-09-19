@@ -1,5 +1,5 @@
 execution_mode,shots,noise_simulated,precision@5,recall@5,ndcg@5,precision@10,ndcg@10,rmse
 Ideal Statevector,Exact,No,0.48,0.1637,0.534,0.4067,0.4963,1.2546
-Finite Shots (1024),1024,No,0.46,0.149,0.4842,0.43,0.4836,1.2581
-Finite Shots (4096),4096,No,0.4667,0.1492,0.5045,0.42,0.4866,1.2541
-Finite Shots (8192),8192,No,0.4667,0.1608,0.5128,0.4267,0.51,1.2549
+Finite Shots (1024),1024,No,0.42,0.1194,0.461,0.4233,0.481,1.257
+Finite Shots (4096),4096,No,0.4867,0.1632,0.5501,0.4233,0.5266,1.2552
+Finite Shots (8192),8192,No,0.5067,0.1717,0.5517,0.4267,0.5118,1.2551
