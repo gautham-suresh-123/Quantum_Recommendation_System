@@ -265,10 +265,8 @@ def process_quantum_recommendations(
             continue
         seen_ids.add(mid)
 
-        if mid in genre_features_df.index:
-            m_prof = genre_features_df.loc[mid].values.astype(float)
-        else:
-            m_prof = encode_genre_vector(m["genres"])
+        m_prof = encode_genre_vector(m["genres"])
+
 
         raw_feat = build_interaction_features(user_vec, m_prof).reshape(1, -1)
         q_feat = transform_preprocessing_pipeline(raw_feat, scaler, pca_model, angle_scaler)[0]
